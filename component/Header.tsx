@@ -8,7 +8,7 @@ export default function Header({ onRefresh, isLoading }: HeaderProps) {
     <div className="header-box">
       <div className="header-title-group">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/icons/tree.svg" alt="Evertime logo" className="header-icon" />
+        <img src="/icons/ferris-wheel.svg" alt="Evertime logo" className="header-icon" />
         <div className="header-text">
           <h1>에버타임</h1>
           <p>현장 상황에 따라 오차가 발생할 수 있습니다.</p>
