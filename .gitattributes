@@ -1,2 +1,2 @@
-*.ts linguist-language=typescript
-*.tsx linguist-language=typescript
+evertime-next/** linguist-documentation=false
+evertime-next/** linguist-vendored=false
