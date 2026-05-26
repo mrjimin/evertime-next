@@ -1,65 +1,89 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState, useEffect, useCallback } from 'react';
+import { Ride } from './types';
+import { fetchAttractions } from '@/util/api';
+import { getKoName } from '@/util/formatter';
+import Header from '@/component/Header';
+import SearchBar from '@/component/SearchBar';
+import AttractionCard from '@/component/AttractionCard';
+import Footer from '@/component/Footer';
+
+export default function HomePage() {
+  const [rides, setRides] = useState<Ride[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+
+  const loadData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchAttractions();
+      setRides(data);
+    } catch {
+      setError('대기시간 정보를 가져오지 못했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const initLoad = async () => { await loadData(); };
+    initLoad();
+  }, [loadData]);
+
+  const clean = (t: string) => t.toLowerCase().replace(/\s+/g, '');
+
+  const filteredRides = rides
+    .filter((r) => {
+      const kn = getKoName(r.name);
+      return clean(r.name).includes(clean(search)) || clean(kn).includes(clean(search));
+    })
+    .sort((a, b) => {
+      if (!a.is_open) return 1;
+      if (!b.is_open) return -1;
+      return a.wait_time - b.wait_time;
+    });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="evertime-container">
+      <div className="evertime-sticky-bar">
+        <Header onRefresh={loadData} isLoading={loading} />
+        <SearchBar value={search} onChange={setSearch} />
+      </div>
+
+      <div className="evertime-content">
+        {loading ? (
+          <div className="status-container">
+            <div className="status-icon-wrapper loading"></div>
+            <span className="status-text attraction-card loading">실시간 대기열 가져오는 중...</span>
+          </div>
+        ) : error ? (
+          <div className="status-container">
+            <div className="status-icon-wrapper error">
+              <svg style={{width: '24px', height: '24px'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <span className="status-text error">{error}</span>
+            <button onClick={loadData} className="retry-button">다시 시도</button>
+          </div>
+        ) : filteredRides.length === 0 ? (
+          <div className="status-container">
+            <div className="status-icon-wrapper empty">
+              <svg style={{width: '24px', height: '24px'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <span className="status-text attraction-card empty">일치하는 어트랙션이 없습니다.</span>
+          </div>
+        ) : (
+          filteredRides.map((ride) => <AttractionCard key={ride.id} ride={ride} />)
+        )}
+      </div>
+
+      <Footer />
     </div>
   );
 }
