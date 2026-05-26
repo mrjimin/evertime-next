@@ -1,2 +1,15 @@
-evertime-next/** linguist-documentation=false
-evertime-next/** linguist-vendored=false
+.next/* linguist-vendored
+out/* linguist-vendored
+chunks/* linguist-vendored
+.vercel/* linguist-vendored
+.idea/* linguist-vendored
+.vscode/* linguist-vendored
+.env* linguist-vendored
+node_modules/* linguist-vendored
+package-lock.json linguist-generated
+yarn.lock linguist-generated
+pnpm-lock.yaml linguist-generated
+public/**/* linguist-vendored
+*.svg linguist-generated
+*.ts linguist-detectable=true
+*.tsx linguist-detectable=true
