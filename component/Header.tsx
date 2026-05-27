@@ -9,7 +9,7 @@ export default function Header({ onRefresh, isLoading }: HeaderProps) {
   return (
     <div className="header-box">
       <div className="header-title-group">
-        <Image src="/icons/ferris-wheel.svg" alt="Evertime logo" className="header-icon" width={24} height={24} />
+        <Image src="/icons/ferris-wheel.svg" alt="Evertime logo" width={36} height={36} priority />
         <div className="header-text">
           <h1>에버타임</h1>
           <p>현장 상황에 따라 오차가 발생할 수 있습니다.</p>
@@ -19,8 +19,10 @@ export default function Header({ onRefresh, isLoading }: HeaderProps) {
         <Image
           src="/icons/refresh.svg"
           alt="Refresh"
-          className={`header-icon ${isLoading ? 'animate-spin' : ''}`}
-          width={24} height={24}
+          className={isLoading ? 'animate-spin' : ''}
+          width={24}
+          height={24}
+          priority
         />
       </button>
     </div>

@@ -28,6 +28,7 @@
     border-left: 1px solid #f3f4f6;
     border-right: 1px solid #f3f4f6;
     font-family: system-ui, -apple-system, sans-serif;
+    justify-content: space-between;
 }
 
 .evertime-sticky-bar {
@@ -51,6 +52,7 @@
     gap: 12px;
     overflow-y: auto;
     scrollbar-width: none;
+    min-height: 60vh;
 }
 
 .evertime-content::-webkit-scrollbar {
@@ -72,12 +74,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.header-icon {
-    width: 24px;
-    height: 24px;
-    display: block;
 }
 
 .header-text h1 {
