@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface SearchBarProps {
   value: string;
   onChange: (text: string) => void;
@@ -7,8 +9,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
   return (
     <div className="search-box">
       <div className="search-icon-wrapper">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/icons/search.svg" alt="Search" className="search-icon" />
+        <Image src="/icons/search.svg" alt="Search" className="search-icon" width={24} height={24} />
       </div>
       <input
         type="text"
@@ -19,8 +20,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
       />
       {value && (
         <button onClick={() => onChange('')} className="search-clear-button">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icons/close.svg" alt="Clear" className="clear-icon" />
+          <Image src="/icons/close.svg" alt="Clear" className="clear-icon" width={24} height={24} />
         </button>
       )}
     </div>

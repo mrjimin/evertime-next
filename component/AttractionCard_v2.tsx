@@ -1,5 +1,6 @@
 import { Ride } from '@/app/types_v2';
 import { getKoName } from '@/util/formatter';
+import Image from "next/image";
 
 export default function AttractionCard({ ride }: { ride: Ride }) {
   const koreanName = getKoName(ride.name);
@@ -17,8 +18,7 @@ export default function AttractionCard({ ride }: { ride: Ride }) {
       <div className="card-info">
         <h3 className="card-title">{koreanName}</h3>
         <div className="card-time-group">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icons/clock.svg" alt="Clock" className="time-icon" />
+          <Image src="/icons/clock.svg" alt="Clock" className="time-icon" />
           <span>{formattedTime} 갱신</span>
         </div>
       </div>
