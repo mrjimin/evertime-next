@@ -1,6 +1,6 @@
 import { Ride, ApiResponse } from '@/app/types';
 
-const INTERNAL_API_URL = '/api/wait-time';
+const INTERNAL_API_URL = '/api/v1';
 
 export async function fetchAttractions(): Promise<Ride[]> {
   try {
