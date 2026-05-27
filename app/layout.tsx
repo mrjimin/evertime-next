@@ -15,19 +15,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="ko">
-    <head>
+    <body>
+
       {/* Cloudflare Web Analytics */}
       {token && (
         <Script
-          defer
           src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon={`{"token": "${token}"}`}
           strategy="afterInteractive"
         />
       )}
       {/* End Cloudflare Web Analytics */}
-    </head>
-    <body>{children}</body>
+
+      {children}
+    </body>
     </html>
   );
 }
