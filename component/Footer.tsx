@@ -6,9 +6,9 @@ export default function Footer() {
       </div>
 
       <p className="footer-members">
-        <span>20507 - 서지민 (개발 총괄)</span>
+        <span>서지민 (개발 총괄)</span>
         <span className="divider">|</span>
-        <span>20509 - 송현섭 (서비스 기획)</span>
+        <span>송현섭 (서비스 기획)</span>
       </p>
 
       <p className="footer-desc">
