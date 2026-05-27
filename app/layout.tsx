@@ -1,5 +1,6 @@
 import './globals.css';
 import React from "react";
+import Script from "next/script";
 
 export const metadata = {
   title: '에버타임',
@@ -10,9 +11,23 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const token = process.env.NEXT_PUBLIC_CLOUDFLARE_TOKEN;
+
   return (
     <html lang="ko">
-      <body>{children}</body>
+    <head>
+      {/* Cloudflare Web Analytics */}
+      {token && (
+        <Script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={`{"token": "${token}"}`}
+          strategy="afterInteractive"
+        />
+      )}
+      {/* End Cloudflare Web Analytics */}
+    </head>
+    <body>{children}</body>
     </html>
   );
 }
