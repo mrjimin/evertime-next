@@ -1,6 +1,7 @@
 import './globals.css';
 import React from "react";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
   title: '에버타임',
@@ -28,6 +29,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       {/* End Cloudflare Web Analytics */}
 
       {children}
+
+      <Analytics />
     </body>
     </html>
   );
