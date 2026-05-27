@@ -2,6 +2,7 @@ import './globals.css';
 import React from "react";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata = {
   title: '에버타임',
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       {children}
 
       <Analytics />
+      <SpeedInsights />
     </body>
     </html>
   );
