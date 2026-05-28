@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Ride } from '../types_v2';
-import { fetchAttractions } from '@/util/api_v2';
-import { getKoName } from '@/util/formatter';
-import Header from '@/component/Header';
-import SearchBar from '@/component/SearchBar';
-import AttractionCard from '@/component/AttractionCard_v2';
-import Footer from '@/component/Footer';
+import { Ride } from '../types';
+import { fetchAttractions } from 'util/api';
+import { getKoName } from 'util/formatter';
+import Header from 'component/Header';
+import SearchBar from 'component/SearchBar';
+import AttractionCard from 'component/AttractionCard';
+import Footer from 'component/Footer';
 
 export default function HomePage() {
   const [rides, setRides] = useState<Ride[]>([]);
@@ -41,9 +41,9 @@ export default function HomePage() {
       return clean(r.name).includes(clean(search)) || clean(kn).includes(clean(search));
     })
     .sort((a, b) => {
-      if (a.status == "CLOSED") return 1;
-      if (b.status == "CLOSED") return -1;
-      return a.last_updated - b.last_updated;
+      if (!a.is_open) return 1;
+      if (!b.is_open) return -1;
+      return a.wait_time - b.wait_time;
     });
 
   return (

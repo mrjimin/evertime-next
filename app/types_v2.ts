@@ -1,10 +1,11 @@
 export interface Ride {
-  id: number;
+  id: string;
   name: string;
   entity_type: string;
   park_id: string;
   external_id: string;
   status: string;
+  wait_time: number;
   last_updated: number;
 }
 

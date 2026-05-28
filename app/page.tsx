@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Ride } from './types';
-import { fetchAttractions } from '@/util/api';
+import { Ride } from '@/app/types_v2';
+import { fetchAttractions } from '@/util/api_v2';
 import { getKoName } from '@/util/formatter';
 import Header from '@/component/Header';
 import SearchBar from '@/component/SearchBar';
-import AttractionCard from '@/component/AttractionCard';
+import AttractionCard from '@/component/AttractionCard_v2';
 import Footer from '@/component/Footer';
 
 export default function HomePage() {
@@ -41,9 +41,9 @@ export default function HomePage() {
       return clean(r.name).includes(clean(search)) || clean(kn).includes(clean(search));
     })
     .sort((a, b) => {
-      if (!a.is_open) return 1;
-      if (!b.is_open) return -1;
-      return a.wait_time - b.wait_time;
+      if (a.status === 'OPERATING' && b.status !== 'OPERATING') return -1;
+      if (a.status !== 'OPERATING' && b.status === 'OPERATING') return 1;
+      return b.last_updated - a.last_updated;
     });
 
   return (
