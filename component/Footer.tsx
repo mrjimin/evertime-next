@@ -16,7 +16,7 @@ export default function Footer() {
         우리만의 완벽한 동선을 짜기 위해 제작되었습니다.
       </p>
 
-      <p className="footer-support">Support by. 우석고등학교</p>
+      <p className="footer-support">Support by. 우석고등학교 (공돌이)</p>
 
       <p className="footer-notice">본 서비스는 우석고등학교 및 에버랜드 공식 기관과 연관이 없는 프로젝트입니다.</p>
 
