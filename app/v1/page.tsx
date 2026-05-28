@@ -2,12 +2,12 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Ride } from '../types';
-import { fetchAttractions } from 'util/api';
-import { getKoName } from 'util/formatter';
-import Header from 'component/Header';
-import SearchBar from 'component/SearchBar';
-import AttractionCard from 'component/AttractionCard';
-import Footer from 'component/Footer';
+import { fetchAttractions } from '@/util/api';
+import { getKoName } from '@/util/formatter';
+import Header from '@/component/Header';
+import SearchBar from '@/component/SearchBar';
+import AttractionCard from '@/component/AttractionCard';
+import Footer from '@/component/Footer';
 
 export default function HomePage() {
   const [rides, setRides] = useState<Ride[]>([]);
